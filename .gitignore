@@ -1,0 +1,16 @@
+.DS_Store
+
+.idea/workspace.xml
+.idea/libraries/*.xml
+
+target/
+out/
+
+# Microsoft Work *.doc tmp file
+~$*.doc
+
+#apple work files
+*.pages
+*.numbers
+
+src/main/webapp/styles/find-unused-style/
