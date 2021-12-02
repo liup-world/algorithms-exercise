@@ -3,101 +3,99 @@ package com.bobsystem.algorithms.datastructure;
 import java.util.Arrays;
 
 /**
- * 双头队列
+ * 循环队列。这里实现了一个非线程安全的循环队列。
  * FIFO
  */
 public class Queue<T> {
 
-    private final Object[] data;
+    //region property fields
+    private final T[] data;
 
-    //private int capacity;
+    private final int capacity;
     private int head;
     private int tail;
     private int size;
+    //endregion property fields
 
+    //region constructor
     public Queue() {
-
         this(4);
     }
 
+    @SuppressWarnings("unchecked")
     public Queue(int initSize) {
-
-        this.data = new Object[initSize];
-        //this.capacity = initSize;
+        this.data = (T[])new Object[initSize];
+        this.capacity = initSize;
     }
+    //endregion constructor
 
+    //region member methods
+
+    /**
+     * 入队，添加到尾巴上
+     */
     public boolean enqueue(T element) {
-
-        if (this.size >= this.data.length) return false;
-
-        this.data[this.tail] = element;
-
-        this.tail += 1;
-        this.tail %= this.data.length; // 双头队列
-
-        this.size += 1;
-
+        T[] data = this.data;
+        int tail = this.tail;
+        data[tail] = element;
+        this.tail = ++tail % data.length; // 循环队列
+        int size = this.size;
+        int capacity = this.capacity;
+        if (++size > capacity) {
+            this.size = capacity;
+            this.head = this.tail; // tail 指向了结束位置 + 1 的地方，即 head
+        }
+        else {
+            this.size = size;
+        }
         return true;
     }
 
+    /**
+     * 出队，从头上取出一元素。
+     * @return 返回出队的元素。
+     */
     public T dequeue() {
-
         if (this.size == 0) return null;
-
-        T result = (T)this.data[this.head++];
-
-        //for (int i = 1, c = this.data.length; i < c; ++i) {
-        //
-        //    this.data[i - 1] = this.data[i];
-        //}
-
+        int head = this.head;
+        T result = this.data[head++];
+        this.head = head % this.capacity;
         this.size -= 1;
-
         return result;
     }
 
     public void clear() {
-
         this.head = 0;
         this.tail = 0;
         this.size = 0;
-
         Arrays.fill(this.data, null);
     }
 
     public int size() {
-
         return this.size;
     }
 
     public boolean isEmpty() {
-
         return this.size == 0;
     }
 
     public boolean isFull() {
-
-        return this.size >= this.data.length;
+        return this.size >= this.capacity;
     }
 
     @Override
     public String toString() {
-
-        if (this.size == 0) return "";
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = this.head, c = this.head + this.size; i < c; ++i) {
-
-            int index = i % this.data.length;
-
-            Object obj = this.data[index];
-            if (obj != null) {
-
-                stringBuilder.append(String.format("%s, ", obj));
-            }
+        int size = this.size;
+        if (size == 0) return "[]";
+        int head = this.head;
+        T[] data = this.data;
+        StringBuilder strBuilder = new StringBuilder(50);
+        strBuilder.append('[');
+        for (int i = head, c = head + size; i < c; ++i) {
+            strBuilder.append(data[i % data.length]).append(", ");
         }
-
-        return stringBuilder.toString();
+        strBuilder.append(']');
+        return strBuilder.toString();
     }
+    //endregion member methods
 }
