@@ -4,23 +4,23 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-public class LinckedListTest {
+public class LinkedListTest {
 
     @Test
     public void test() {
 
-        LinkedList<Integer> list = new LinkedList<Integer>();
+        LinkedList<Integer> list = new LinkedList<>();
         list.add(10);
         list.add(20);
         list.add(30);
         list.insert(40, 3);
+
+        System.out.println(list);
         //list.removeAt(4);
         //list.remove(50);
 
-        Iterator<Integer> iterator = list.iterator();
-        while (iterator.hasNext()) {
-
-            System.out.println(iterator.next());
+        for (Integer i : list) {
+            System.out.println(i);
         }
         System.out.println(list.get(4));
         System.out.println(list.size());
