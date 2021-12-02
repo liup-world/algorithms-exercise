@@ -3,20 +3,15 @@ package com.bobsystem.algorithms.sort;
 public class SearchAlgorithms {
 
     public void binarySearch(int[] arr, int target) {
-
         int left = 0;
         int right = arr.length - 1;
 
         int times = 0; // 记录查找次数
         boolean findit = false;
-
         while (left <= right) {
-
             times += 1;
-
             int focus = (left + right) / 2;
             int middle = arr[focus];
-
             if (middle == target) {
                 findit = true;
                 break;

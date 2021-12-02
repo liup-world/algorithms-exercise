@@ -2,7 +2,9 @@ package com.bobsystem.algorithms.patterns;
 
 public class PatternAlgorithms {
 
-    // 等腰三角形
+    /**
+     * 等腰三角形
+     */
     public void printTriangle(int tier) {
 
         for (int i = 0; i < tier; ++i) {
@@ -19,7 +21,9 @@ public class PatternAlgorithms {
         }
     }
 
-    // 打印菱形
+    /**
+     * 打印菱形
+     */
     public void printRhombus(int tier) {
 
         int half = tier / 2;

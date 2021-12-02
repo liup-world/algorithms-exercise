@@ -58,24 +58,20 @@ public class StringAlgorithms {
      */
 
     public String money2Hanzi(double amount) {
-
         String formater = "0.0000";
         if (amount - (int)amount == 0) {
             formater = "0";
         }
         DecimalFormat decimalFormater = new DecimalFormat(formater);
-
         String strAmount = decimalFormater.format(amount);
         int dotIndex = strAmount.indexOf('.');
-
         int length = strAmount.length();
         if (dotIndex != -1) {
             length = dotIndex;
         }
-
         StringBuilder stringBuilder = new StringBuilder("￥");
+        // 整数部分
         for (int i = length - 1; i >= 0; --i) {
-
             char num = strAmount.charAt(length - 1 - i);
             // 数值大于0 数字和单位都要拼接
             // 个位是0 不要数字
@@ -89,10 +85,8 @@ public class StringAlgorithms {
         }
         //System.out.println(stringBuilder);
         if (dotIndex != -1) {
-
             String decimalPart = strAmount.substring(dotIndex + 1);
             for (int i = 0, c = decimalPart.length(); i < c; ++i) {
-
                 char num = decimalPart.charAt(i);
                 stringBuilder.append(mapNumber.get(num));
                 stringBuilder.append(mapUnits.get(-i - 1));
@@ -102,9 +96,9 @@ public class StringAlgorithms {
             stringBuilder.append("整");
         }
         String result = stringBuilder.toString();
-        result = result.replaceAll("零{4}(亿|万)", "");
+        result = result.replaceAll("零{4}[亿万]", "");
         result = result.replaceAll("零{2,}", "零");
-        result = result.replaceAll("零(亿|万)", "$1");
+        result = result.replaceAll("零([亿万])", "$1");
         //result = result.replaceAll("零(角|分|厘)", "零");
 
         return result;
@@ -113,20 +107,17 @@ public class StringAlgorithms {
     // 推荐
     public String money2Hanzi2(double amount) {
         StringBuilder strBuilder = new StringBuilder();
-
         int money = (int)amount;
         int i = 0;
         while (money > 0) {
             strBuilder.insert(0, arrUnit[i++]);
             int num = money % 10;
             strBuilder.insert(0, arrNumber[num]);
-
             money /= 10;
         }
         if (amount - (int)amount > 0) { // 处理小数
             DecimalFormat formater = new DecimalFormat("0.0000");
             String strAmount = formater.format(amount);
-
             int dot = strAmount.indexOf('.');
             if (dot != -1) {
                 String decimalPart = strAmount.substring(dot + 1);
@@ -136,11 +127,9 @@ public class StringAlgorithms {
                 money = decimal.intValue();
                 i = 0;
                 while (money > 0) {
-
                     decimalStringBuilder.insert(0, arrDecimalUnit[i++]);
                     int num = money % 10;
                     decimalStringBuilder.insert(0, arrNumber[num]);
-
                     money = money / 10;
                 }
                 strBuilder.append(decimalStringBuilder);
@@ -149,32 +138,34 @@ public class StringAlgorithms {
         else {
             strBuilder.append("整");
         }
-        String result = strBuilder.toString();
+        String result = strBuilder.insert(0, '￥').toString();
         //System.out.println(result);
-
         result = result.replaceAll("零[仟佰拾]", "零");
         result = result.replaceAll("零{2,}", "零");
-        result = result.replaceAll("零(亿|万|元)", "$1");
+        result = result.replaceAll("零([亿万元])", "$1");
         result = result.replaceAll("亿万", "亿");
-
         return result;
     }
 
-    public String complementSubstring(byte bytes[], int subLength) {
-
-        int length = subLength - 1;
-        byte by = bytes[length];
-        if (by >= 0) {
-            length += 1;
-        }
+    /**
+     * 截取一个包含汉字的字节数组，保证不会让汉字乱码，汉字词语不被截断
+     *   原理：利用汉字的字符编码小于 0 的事实，当截取的位置小于 0，就多截一位，直到遇到 ascii 码
+     * @param bytes 包含汉字的字节数组
+     * @param subLength 截取的长度
+     */
+    public String substringHanziWord(byte[] bytes, int subLength) {
+        int length = bytes.length;
+        if (subLength >= length) return new String(bytes);
+        int len = subLength - 1;
+        byte by = bytes[len];
+        if (by >= 0) len += 1;
         while (by < 0) {
-
-            length += 1;
-            by = bytes[length];
+            len += 1;
+            if (len >= length) break;
+            by = bytes[len];
         }
         //System.out.printf("old: %d, new: %d, result: %s%n",
-        //    subLength, length, new String(bytes, 0, length));
-
-        return new String(bytes, 0, length);
+        //    subLength, len, new String(bytes, 0, len));
+        return new String(bytes, 0, len);
     }
 }
