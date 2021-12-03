@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * 使用 Stack 进行进制转换
  */
-public class RadixTest {
+public class RadixConvertTest {
 
     @Test
     public void testConvert() {

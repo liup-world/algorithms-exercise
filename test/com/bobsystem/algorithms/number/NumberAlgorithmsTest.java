@@ -6,30 +6,30 @@ public class NumberAlgorithmsTest {
 
     private final NumberAlgorithms numberAlgorithms = new NumberAlgorithms();
 
-    // 素数/质数，在大于1的自然数中，除了1和它本身以外不再有其他因数的数称为质数
+    /**
+     * 素数/质数，在大于 1 的自然数中，除了 1 和 它本身 以外不再有其他因数的数称为质数
+     */
     @Test
-    public void testPrimeNumber() {
-
-        for (int i = 2; i <= 100; ++i) {
-
-            if (this.numberAlgorithms.isPrime(i)) {
-
-                System.out.printf("%d ", i);
-            }
-        }
+    public void testShowPrime() {
+        NumberAlgorithms alg = this.numberAlgorithms;
+        final int max = 105;
+        alg.showPrime(max);
         System.out.println();
 
-        this.numberAlgorithms.showPrimeFilter(100);
+        alg.showPrimeFilter(max);
     }
 
-    // 99乘法表
+    /**
+     * 99 乘法表
+     */
     @Test
-    public void testPrintMultiplyTable() {
-
+    public void testMultiplyTable() {
         this.numberAlgorithms.multiplyTable();
     }
 
-    // 对称数
+    /**
+     * 对称数
+     */
     @Test
     public void testCircleNumber() {
 
@@ -42,15 +42,19 @@ public class NumberAlgorithmsTest {
         }
     }
 
-    // 50人 谁数到3 谁就离开
+    /**
+     * 50人 谁数到3 谁就离开
+     */
     @Test
     public void testCycleDelete() {
         this.numberAlgorithms.cycleDelete(50, 3);
     }
 
-    // 阿姆斯特朗数，当幂是3时称为 [水仙花数]
+    /**
+     * 阿姆斯特朗数，当幂是3时称为 [水仙花数]
+     */
     @Test
     public void testArmstrongNumber() {
-        this.numberAlgorithms.armstrongNumber(100, 1000);
+        this.numberAlgorithms.armstrongNumber(0, 500);
     }
 }
