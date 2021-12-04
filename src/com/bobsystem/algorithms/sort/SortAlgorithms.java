@@ -9,6 +9,91 @@ package com.bobsystem.algorithms.sort;
  */
 public class SortAlgorithms {
 
+    //region swap sort 冒泡排序、快速排序
+    /**
+     * 冒泡排序法逻辑：相邻的两个数比较
+     * 5 4 3 2 1
+     * 4 5 3 2 1
+     * 4 3 5 2 1
+     * 4 3 2 5 1
+     * 4 3 2 1 5
+     *
+     * 时间复杂度接近 o(n^2)
+     */
+    public void bubbleSort(int[] arr) {
+        for (int i = 0, c = arr.length; i < c - 1; ++i) {
+            // 再减 i 的目的是，相邻两两比较，保证最后 i 位已经正序排列
+            for (int j = 0; j < c - 1 - i; ++j) {
+                if (arr[j] > arr[j + 1]) {
+                    int tmp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tmp;
+                }
+            }
+        }
+    }
+
+    /**
+     * 快速排序法。核心：将数组视为两部分，让左侧所有元素都比右侧小
+     * 具体逻辑：
+     *   取第一个元素作为 pivot(轴值)，
+     *   先从右侧依次与 pivot 比较，小于，将右侧数值赋给左侧；否则取紧挨的下一个数继续。
+     *   再从左侧依次与 pivot 比较，大于，将左侧数值赋给右侧；否则取紧挨的下一个数继续。
+     *   最后将 pivot 赋予左侧。
+     */
+    public void quickSort(int[] arr) {
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    private void quickSort(int[] arr, int low, int high) {
+        int left = low;  // left、right 是下标
+        int right = high;
+        int pivot = arr[low]; // pivot 取 low 位
+        while (left < right) {
+            while (left < right && arr[right] >= pivot) {
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left < right && arr[left] <= pivot) {
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = pivot;
+        //System.out.printf("left=%d right=%d pivot=%d%n", left + 1, right + 1, pivot);
+        if (left > low) {
+            quickSort(arr, low, left);
+        }
+        if (right < high) {
+            quickSort(arr, left + 1, high);
+        }
+    }
+    //endregion swap sort
+
+    //region select sort
+    /**
+     * 选择排序法逻辑：第 1 位数依次向后面的数比较
+     * 5 4 3 2 1
+     * 4 5 3 2 1
+     * 3 5 4 2 1
+     * 2 5 4 3 1
+     * 1 5 4 3 2
+     *
+     * 时间复杂度接近 o(n ^ 2)
+     */
+    public void selectSort(int[] arr) {
+        for (int i = 0, m = arr.length - 1; i < m; ++i) {
+            for (int j = i + 1, n = arr.length; j < n; ++j) {
+                int tmp = arr[i];
+                if (tmp > arr[j]) {
+                    arr[i] = arr[j];
+                    arr[j] = tmp;
+                }
+            }
+        }
+    }
+    //endregion select sort
+
     //region insert sort 插入排序、希尔排序
     /**
      * 插入排序法。
@@ -55,92 +140,6 @@ public class SortAlgorithms {
         System.out.println("希尔排序一共交换的次数：" + times);
     }
     //endregion insert sort 插入排序、希尔排序
-
-    //region select sort
-    /**
-     * 选择排序法逻辑：第 1 位数依次向后面的数比较
-     * 5 4 3 2 1
-     * 4 5 3 2 1
-     * 3 5 4 2 1
-     * 2 5 4 3 1
-     * 1 5 4 3 2
-     *
-     * 时间复杂度接近 o(n ^ 2)
-     */
-    public void selectSort(int[] arr) {
-        for (int i = 0, m = arr.length - 1; i < m; ++i) {
-            for (int j = i + 1, n = arr.length; j < n; ++j) {
-                int tmp = arr[i];
-                if (tmp > arr[j]) {
-                    arr[i] = arr[j];
-                    arr[j] = tmp;
-                }
-            }
-        }
-    }
-    //endregion select sort
-
-    //region swap sort 冒泡排序、快速排序
-    /**
-     * 冒泡排序法逻辑：相邻的两个数比较
-     * 5 4 3 2 1
-     * 4 5 3 2 1
-     * 4 3 5 2 1
-     * 4 3 2 5 1
-     * 4 3 2 1 5
-     *
-     * 时间复杂度接近 o(n^2)
-     */
-    public void bubbleSort(int[] arr) {
-        for (int i = 0, c = arr.length; i < c - 1; ++i) {
-            // 再减 i 的目的是，相邻两两比较，保证最后 i 位已经正序排列
-            for (int j = 0; j < c - 1 - i; ++j) {
-                if (arr[j] > arr[j + 1]) {
-                    int tmp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = tmp;
-                }
-            }
-        }
-    }
-
-    /**
-     * 快速排序法逻辑：将数组视为两部分，让一部分都比另一部分小
-     * 具体逻辑：右侧数值依次和 pivot(轴值) 比较，如果小于，将右侧数值赋给左侧
-     *          左侧数值依次和 pivot 比较，如果大于，将左侧数值赋给右侧 变化过的 right 位置
-     *          然后将 pivot 赋予 变化过的left位置
-     */
-    public void quickSort(int[] arr) {
-        quickSort(arr, 0, arr.length - 1);
-    }
-
-    private void quickSort(int[] arr, int low, int high) {
-        int left = low;  // left、right 是下标
-        int right = high;
-        int pivot = arr[low]; // pivot 取第1位数
-        while (left < right) {
-            while (left < right && arr[right] >= pivot) {
-                right--;
-            }
-            arr[left] = arr[right];
-
-            while (left < right && arr[left] <= pivot) {
-                left++;
-            }
-            arr[right] = arr[left];
-        }
-        arr[left] = pivot;
-
-        System.out.printf("left=%d right=%d pivot=%d%n", left + 1, right + 1, pivot);
-
-        if (left > low) {
-            quickSort(arr, low, left - 1);
-        }
-        if (right < high) {
-            quickSort(arr, left + 1, high);
-        }
-    }
-    //endregion swap sort
 
     //region merge sort
     /**

@@ -1,20 +1,17 @@
 package com.bobsystem.algorithms.sort;
 
-import java.util.Scanner;
+import org.junit.Test;
 
 public class SearchAlgorithmTest {
 
-    private static final SearchAlgorithms SEARCH_ALGORITHMS = new SearchAlgorithms();
+    private final SearchAlgorithms algorithm = new SearchAlgorithms();
 
-    public static void main(String[] args) {
-        // binary search 在顺序的列表中查找
-        System.out.print("give me a number (1 - 8):");
-        System.out.flush();
-
-        Scanner scanner = new Scanner(System.in);
-        int num = scanner.nextInt();
+    // binary search 在顺序的列表中查找
+    @Test
+    public void testBinarySearch() {
+        int num = 3;
 
         int[] sorted = { 1, 2, 3, 4, 5, 6, 7, 8 };
-        SEARCH_ALGORITHMS.binarySearch(sorted, num);
+        this.algorithm.binarySearch(sorted, num);
     }
 }
