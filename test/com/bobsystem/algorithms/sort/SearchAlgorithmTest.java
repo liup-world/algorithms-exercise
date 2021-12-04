@@ -6,7 +6,9 @@ public class SearchAlgorithmTest {
 
     private final SearchAlgorithms algorithm = new SearchAlgorithms();
 
-    // binary search 在顺序的列表中查找
+    /**
+     * binary search 在顺序的列表中查找
+     */
     @Test
     public void testBinarySearch() {
         int num = 3;

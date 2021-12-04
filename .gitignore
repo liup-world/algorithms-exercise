@@ -12,5 +12,3 @@ out/
 #apple work files
 *.pages
 *.numbers
-
-src/main/webapp/styles/find-unused-style/

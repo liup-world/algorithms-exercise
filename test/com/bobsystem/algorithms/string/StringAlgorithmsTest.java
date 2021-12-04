@@ -2,7 +2,7 @@ package com.bobsystem.algorithms.string;
 
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class StringAlgorithmsTest {
 
@@ -35,15 +35,10 @@ public class StringAlgorithmsTest {
     @Test
     public void testSubstringHanziWord() {
         String str = "刘少波刘ab少cd波刘少波";
-        try {
-            byte[] bytes = str.getBytes("utf-8");
-            for (int subLength = 1; subLength < 30; ++subLength) {
-                String result = this.algorithm.substringHanziWord(bytes, subLength);
-                System.out.println(result);
-            }
-        }
-        catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        for (int subLength = 1; subLength < 30; ++subLength) {
+            String result = this.algorithm.substringHanziWord(bytes, subLength);
+            System.out.println(result);
         }
     }
 }

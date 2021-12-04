@@ -1,0 +1,41 @@
+package com.bobsystem.algorithms.matrix;
+
+import org.junit.After;
+import org.junit.Test;
+
+import java.util.Arrays;
+
+public class MatrixAlgorithmsTest {
+
+    //region private fields
+    private final MatrixAlgorithms algorithms = new MatrixAlgorithms();
+
+    private final Character[][] matrix = {
+        // 00  10   20   30
+        { 'A', 'B', 'C', 'D' },
+        // 01  11   21   31
+        { 'I', 'J', 'K', 'L'},
+        // 02  12   22   32
+        { 'X', 'Y', 'Z', 'W' },
+        // 03  13   23   33
+        { '^', '-', '_', '/' },
+    };
+    //endregion private fields
+
+    //region member methods
+    @Test
+    public void testSpin() {
+        this.algorithms.spin(this.matrix);
+    }
+
+    @After
+    public void after() {
+        Object[][] matrix = this.matrix;
+        System.out.println('[');
+        for (Object[] objects : matrix) {
+            System.out.println("\t" + Arrays.toString(objects));
+        }
+        System.out.println(']');
+    }
+    //endregion member methods
+}

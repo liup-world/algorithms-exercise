@@ -2,6 +2,9 @@ package com.bobsystem.algorithms.sort;
 
 public class SearchAlgorithms {
 
+    /**
+     * binary search 在顺序的列表中查找
+     */
     public void binarySearch(int[] arr, int target) {
         int left = 0;
         int right = arr.length - 1;

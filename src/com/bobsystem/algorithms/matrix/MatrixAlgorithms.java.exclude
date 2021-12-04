@@ -1,0 +1,32 @@
+package com.bobsystem.algorithms.matrix;
+
+import java.util.Arrays;
+
+public class MatrixAlgorithms {
+
+    public void spin(Object[][] matrix) {
+        spin(matrix, 1);
+    }
+
+    public void spin(Object[][] matrix, int n90o) {
+        spin(matrix, matrix.length, n90o);
+    }
+
+    private void spin(Object[][] matrix, int rows, int n90o) {
+        for (int i = 0; i < n90o; ++i) {
+            spin_(matrix, rows);
+        }
+    }
+
+    private void spin_(Object[][] matrix, int rows) {
+        Object[][] copy = Arrays.copyOf(matrix, rows);
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < rows; ++j) {
+                int x = (j - i) / 2;
+                int y = j - x;
+                if (x < 0 || y < 0) continue;
+                matrix[i][j] = copy[x][y];
+            }
+        }
+    }
+}
